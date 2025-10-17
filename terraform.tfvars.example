@@ -1,0 +1,47 @@
+# Example terraform.tfvars file
+# Copy this to terraform.tfvars and customize the values
+
+# Basic Configuration
+resource_group_name = "dr-analytics-platform-rg"
+location           = "East US 2"  # Choose your DR region
+project_name       = "dranalytics"
+domain_name        = "your-domain.com"
+
+# Admin Configuration
+admin_email = "admin@your-domain.com"
+
+# Database Credentials (use strong passwords in production)
+synapse_admin_username = "synadmin"
+synapse_admin_password = "YourStrongSynapsePassword123!"
+sql_admin_username     = "sqladmin"
+sql_admin_password     = "YourStrongSQLPassword123!"
+
+# Network Security (restrict these IP ranges in production)
+allowed_ip_ranges = [
+  "10.0.0.0/8",     # Private network
+  "192.168.0.0/16", # Private network
+  "your.public.ip.address/32"  # Your office/home IP
+]
+
+# Backup Configuration
+enable_backup         = true
+backup_retention_days = 30
+
+# Cost Management Configuration
+monthly_budget_amount      = 3000    # Monthly budget limit in USD
+compute_budget_amount      = 1500    # Compute-specific budget limit
+cost_center               = "IT-Infrastructure"
+business_unit             = "Analytics"
+storage_alert_threshold_gb = 800     # Alert when storage exceeds 800GB
+enable_cost_automation    = false    # Enable automated cost optimization
+# cost_webhook_url        = "https://your-webhook-url"  # Optional webhook for cost alerts
+
+# Additional Tags
+tags = {
+  Environment   = "DR"
+  Project       = "Analytics Platform"
+  ManagedBy     = "Terraform"
+  Purpose       = "Disaster Recovery"
+  CostCenter    = "IT-Infrastructure"
+  Owner         = "DataTeam"
+}
