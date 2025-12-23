@@ -4,7 +4,7 @@ resource "azurerm_storage_account" "main_storage" {
   resource_group_name      = azurerm_resource_group.dr_rg.name
   location                 = azurerm_resource_group.dr_rg.location
   account_tier             = "Standard"
-  account_replication_type = "ZRS"  # Zone-redundant storage for high availability
+  account_replication_type = "ZRS" # Zone-redundant storage for high availability
   account_kind             = "StorageV2"
 
   blob_properties {
@@ -20,14 +20,14 @@ resource "azurerm_storage_account" "main_storage" {
   }
 
   # Security hardening: Restrict network access
-  min_tls_version                = "TLS1_2"
-  https_traffic_only_enabled     = true
-  allow_nested_items_to_be_public = false
+  min_tls_version                   = "TLS1_2"
+  https_traffic_only_enabled        = true
+  allow_nested_items_to_be_public   = false
   infrastructure_encryption_enabled = true
 
   network_rules {
-    default_action             = "Deny"
-    bypass                     = ["AzureServices"]
+    default_action = "Deny"
+    bypass         = ["AzureServices"]
     virtual_network_subnet_ids = [
       azurerm_subnet.private_subnet_a.id,
       azurerm_subnet.private_subnet_b.id,
@@ -62,7 +62,7 @@ resource "azurerm_storage_container" "application_logs" {
 resource "azurerm_storage_share" "shiny_share" {
   name                 = "shiny-apps"
   storage_account_name = azurerm_storage_account.main_storage.name
-  quota                = 100  # GB
+  quota                = 100 # GB
 
   acl {
     id = "shared-access"
@@ -78,7 +78,7 @@ resource "azurerm_storage_share" "shiny_share" {
 resource "azurerm_storage_share" "rstudio_share" {
   name                 = "rstudio-data"
   storage_account_name = azurerm_storage_account.main_storage.name
-  quota                = 200  # GB
+  quota                = 200 # GB
 
   acl {
     id = "shared-access"
@@ -94,7 +94,7 @@ resource "azurerm_storage_share" "rstudio_share" {
 resource "azurerm_storage_share" "upload_share" {
   name                 = "sftp-uploads"
   storage_account_name = azurerm_storage_account.main_storage.name
-  quota                = 500  # GB
+  quota                = 500 # GB
 
   acl {
     id = "upload-access"

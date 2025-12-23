@@ -145,15 +145,15 @@ output "cost_management_dashboard_url" {
 output "estimated_monthly_costs" {
   description = "Estimated monthly cost breakdown"
   value = {
-    compute_low    = "$850"
-    compute_high   = "$1,800"
-    storage_low    = "$400"
-    storage_high   = "$1,200"
-    networking     = "$300-650"
-    security       = "$200-450"
-    total_low      = "$1,850"
-    total_high     = "$4,300"
-    budget_set     = "$${var.monthly_budget_amount}"
+    compute_low  = "$850"
+    compute_high = "$1,800"
+    storage_low  = "$400"
+    storage_high = "$1,200"
+    networking   = "$300-650"
+    security     = "$200-450"
+    total_low    = "$1,850"
+    total_high   = "$4,300"
+    budget_set   = "$${var.monthly_budget_amount}"
   }
 }
 
