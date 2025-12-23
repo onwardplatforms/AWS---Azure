@@ -60,7 +60,7 @@ This Terraform configuration creates a disaster recovery (DR) replica of an AWS 
    az login
    ```
 
-2. **Terraform**: Install Terraform >= 1.0
+2. **Terraform**: Install Terraform >= 1.0 (tested with v1.13.4)
    ```bash
    terraform --version
    ```
