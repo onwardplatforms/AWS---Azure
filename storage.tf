@@ -21,7 +21,7 @@ resource "azurerm_storage_account" "main_storage" {
 
   # Security hardening: Restrict network access
   min_tls_version                = "TLS1_2"
-  enable_https_traffic_only      = true
+  https_traffic_only_enabled     = true
   allow_nested_items_to_be_public = false
   infrastructure_encryption_enabled = true
 
@@ -107,6 +107,12 @@ resource "azurerm_storage_share" "upload_share" {
   }
 }
 
+# Data Lake Gen2 for Synapse (created first)
+resource "azurerm_storage_data_lake_gen2_filesystem" "synapse_fs" {
+  name               = "synapse-data"
+  storage_account_id = azurerm_storage_account.main_storage.id
+}
+
 # Azure Synapse Analytics (equivalent to AWS Athena)
 resource "azurerm_synapse_workspace" "main_synapse" {
   name                                 = "${var.project_name}-synapse-${random_id.suffix.hex}"
@@ -128,15 +134,6 @@ resource "azurerm_synapse_workspace" "main_synapse" {
   tags = var.tags
 }
 
-# Data Lake Gen2 for Synapse
-resource "azurerm_storage_data_lake_gen2_filesystem" "synapse_fs" {
-  name               = "synapse-data"
-  storage_account_id = azurerm_storage_account.main_storage.id
-
-  depends_on = [
-    azurerm_role_assignment.synapse_storage_contributor
-  ]
-}
 
 # Role assignment for Synapse to access storage
 resource "azurerm_role_assignment" "synapse_storage_contributor" {
