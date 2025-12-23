@@ -2,8 +2,6 @@
 
 This Terraform configuration creates a disaster recovery (DR) replica of an AWS analytics platform in Azure. The infrastructure supports R/Shiny applications with high availability, security, and scalability.
 
-Last updated December 2025.
-
 ## Architecture Overview
 
 ### Azure Services Mapping from AWS:
