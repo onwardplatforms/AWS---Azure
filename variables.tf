@@ -25,6 +25,11 @@ variable "domain_name" {
 variable "admin_email" {
   description = "Administrator email for alerts and notifications"
   type        = string
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", var.admin_email))
+    error_message = "The admin_email must be a valid email address."
+  }
 }
 
 variable "synapse_admin_username" {
@@ -37,6 +42,11 @@ variable "synapse_admin_password" {
   description = "Admin password for Synapse Analytics"
   type        = string
   sensitive   = true
+
+  validation {
+    condition     = length(var.synapse_admin_password) >= 8 && can(regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]", var.synapse_admin_password))
+    error_message = "Password must be at least 8 characters and contain uppercase, lowercase, number, and special character."
+  }
 }
 
 variable "sql_admin_username" {
@@ -49,6 +59,11 @@ variable "sql_admin_password" {
   description = "Admin password for SQL Server"
   type        = string
   sensitive   = true
+
+  validation {
+    condition     = length(var.sql_admin_password) >= 8 && can(regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]", var.sql_admin_password))
+    error_message = "Password must be at least 8 characters and contain uppercase, lowercase, number, and special character."
+  }
 }
 
 variable "tags" {
@@ -77,19 +92,24 @@ variable "rstudio_port" {
 variable "enable_backup" {
   description = "Enable backup for storage accounts and databases"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "backup_retention_days" {
   description = "Number of days to retain backups"
   type        = number
   default     = 30
+
+  validation {
+    condition     = var.backup_retention_days >= 7 && var.backup_retention_days <= 35
+    error_message = "Backup retention days must be between 7 and 35 days."
+  }
 }
 
 variable "allowed_ip_ranges" {
   description = "List of IP ranges allowed to access the infrastructure"
   type        = list(string)
-  default     = []  # No access by default - force user to specify allowed IPs
+  default     = [] # No access by default - force user to specify allowed IPs
 }
 
 # Cost Management Variables

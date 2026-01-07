@@ -36,8 +36,8 @@ resource "azurerm_key_vault" "kv" {
   soft_delete_retention_days    = 90
 
   network_acls {
-    bypass                     = "AzureServices"
-    default_action             = "Deny"
+    bypass         = "AzureServices"
+    default_action = "Deny"
     virtual_network_subnet_ids = [
       azurerm_subnet.private_subnet_a.id,
       azurerm_subnet.private_subnet_b.id,

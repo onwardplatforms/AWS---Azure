@@ -72,7 +72,7 @@ resource "azurerm_consumption_budget_resource_group" "compute_budget" {
     dimension {
       name     = "ServiceName"
       operator = "In"
-      values   = [
+      values = [
         "Container Instances",
         "Application Gateway",
         "Azure Synapse Analytics"
@@ -165,8 +165,8 @@ resource "azurerm_automation_runbook" "pause_synapse" {
   automation_account_name = azurerm_automation_account.cost_optimization[0].name
   log_verbose             = "true"
   log_progress            = "true"
-  description            = "Automatically pause Synapse SQL pools during off hours"
-  runbook_type           = "PowerShell"
+  description             = "Automatically pause Synapse SQL pools during off hours"
+  runbook_type            = "PowerShell"
 
   content = <<CONTENT
 param(
@@ -207,7 +207,7 @@ resource "azurerm_automation_schedule" "pause_synapse_schedule" {
   automation_account_name = azurerm_automation_account.cost_optimization[0].name
   frequency               = "Hour"
   interval                = 1
-  description            = "Check every hour if Synapse pool should be paused"
+  description             = "Check every hour if Synapse pool should be paused"
 }
 
 # Link schedule to runbook

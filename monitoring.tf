@@ -38,13 +38,13 @@ resource "azurerm_monitor_action_group" "main_action_group" {
 resource "azurerm_monitor_metric_alert" "container_cpu_alert" {
   name                = "${var.project_name}-container-cpu-alert"
   resource_group_name = azurerm_resource_group.dr_rg.name
-  scopes              = [
+  scopes = [
     azurerm_container_group.shiny_containers_a.id,
     azurerm_container_group.shiny_containers_b.id,
     azurerm_container_group.rstudio_containers_a.id,
     azurerm_container_group.rstudio_containers_b.id
   ]
-  description         = "Alert when container CPU usage is high"
+  description = "Alert when container CPU usage is high"
 
   criteria {
     metric_namespace = "Microsoft.ContainerInstance/containerGroups"
@@ -78,7 +78,7 @@ resource "azurerm_monitor_metric_alert" "storage_capacity_alert" {
     metric_name      = "UsedCapacity"
     aggregation      = "Average"
     operator         = "GreaterThan"
-    threshold        = 85000000000  # 85 GB in bytes
+    threshold        = 85000000000 # 85 GB in bytes
   }
 
   action {
